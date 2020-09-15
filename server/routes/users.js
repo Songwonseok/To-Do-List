@@ -8,7 +8,6 @@ const resObject = require('../resObject')
 
 
 router.get('/', (req, res, next) => {
-  console.log('bb');
   const query = "SELECT * FROM users";
   connection.query(query, (err, rows, fields) => {
     console.log(err);
