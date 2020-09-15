@@ -7,7 +7,7 @@ class UserModel {
 
     SELECT_ALL() {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM users";
+            const query = "SELECT * FROM user";
             connection.query(query, (err, rows, fields) => {
                 if(err){
                     reject(err);
@@ -19,7 +19,7 @@ class UserModel {
 
     SELECT(user_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM users where user_id = ?";
+            const query = "SELECT * FROM user where user_id = ?";
             connection.query(query, user_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -31,13 +31,14 @@ class UserModel {
 
     INSERT(userDTO) {
         return new Promise((resolve, reject) => {
-            const query = "INSERT INTO users(email, password, name) VALUES(?,?,?)";
+            const query = "INSERT INTO user(email, password, name) VALUES(?,?,?)";
             const params = [userDTO.email, userDTO.password, userDTO.name];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(rows.insertId);
+                const insertId = rows.insertId;
+                resolve(insertId);
             })
         })
     }

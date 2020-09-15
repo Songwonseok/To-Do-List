@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:user_id', (req, res, next) => {
+router.get('/:user_id', async (req, res, next) => {
     const user_id = req.params.user_id;
     try {
         const data = await uService.findAll(user_id);
@@ -28,10 +28,9 @@ router.get('/:user_id', (req, res, next) => {
     }
 })
 
-router.post('/', (req, res, next) => {
-    const userDTO = [req.body.email, req.body.password, req.body.name];
+router.post('/', async (req, res, next) => {
     try {
-        const post_id = await uService.create(userDTO);
+        const post_id = await uService.create({ email: req.body.email, password: req.body.password, name: req.body.name});
         const response = resObject(200, true, '유저 등록 성공', { post_id });
         res.send(response);
     } catch (err) {
