@@ -34,7 +34,7 @@ router.get('/:user_id', (req, res, next) => {
 router.post('/', (req,res,next) => {
   const query = "INSERT INTO users(email, password, name) VALUES(?,?,?)";
   const params = [req.body.email, req.body.password, req.body.name];
-  connection.query(query, params, (err,rows,fields) => {
+  connection.excute(query, params, (err,rows,fields) => {
     if(err){
       const response = resObject(400, false, err.sqlMessage, null);
       res.send(response);
