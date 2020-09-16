@@ -43,7 +43,6 @@ class BoardModel {
         })
     }
 
-
     UPDATE(boardDTO) {
         return new Promise((resolve, reject) => {
             const query = "UPDATE Board SET name=?, head=? WHERE id = ?";

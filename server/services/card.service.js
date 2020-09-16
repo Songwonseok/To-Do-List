@@ -113,7 +113,6 @@ class CardService {
                 prev.next_card = card.next_card;
                 await this.cardModel.UPDATE_NODE(prev);
             }
-
             const affectedRows = await this.cardModel.DELETE(card_id);
             return affectedRows;
         } catch (err) {

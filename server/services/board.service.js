@@ -40,7 +40,6 @@ class BoardService {
             throw err;
         }
     }
-
 }
 
 module.exports = BoardService;
