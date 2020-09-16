@@ -20,7 +20,7 @@ class CardController {
         this.insertCard = async (req, res, next) => {
             try {
                 const cardDTO = {
-                    board_id: req.body.boad_id,
+                    board_id: req.body.board_id,
                     content: req.body.content,
                     addedBy: req.body.addedBy,
                 }

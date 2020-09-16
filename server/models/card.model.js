@@ -43,8 +43,8 @@ class CardModel {
 
     SELECT_LAST(board_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Card WHERE next_card = null AND board_id = ?";
-            connection.query(query, card_id, (err, rows, fields) => {
+            const query = "SELECT * FROM Card WHERE next_card IS NULL AND board_id = ?";
+            connection.query(query, board_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
