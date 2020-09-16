@@ -7,7 +7,7 @@ class BoardModel {
 
     SELECT_ALL(user_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM list where user_id = ?";
+            const query = "SELECT * FROM Board where user_id = ?";
             connection.query(query, user_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -17,10 +17,10 @@ class BoardModel {
         })
     }
 
-    SELECT(list_id) {
+    SELECT(board_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM list where id = ?";
-            connection.query(query, list_id, (err, rows, fields) => {
+            const query = "SELECT * FROM Board where id = ?";
+            connection.query(query, board_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -29,23 +29,10 @@ class BoardModel {
         })
     }
 
-    SELECT_LAST(user_id) {
+    INSERT(boardDTO) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM list where id = ? AND right_list = null";
-            connection.query(query, list_id, (err, rows, fields) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(rows[0]);
-            })
-        })
-    }
-
-
-    INSERT(listDTO) {
-        return new Promise((resolve, reject) => {
-            const query = "INSERT INTO list(name, user_id, left_list,right_list) VALUES(?,?,?,?)";
-            const params = [listDTO.name, listDTO.user_id, listDTO.left_list, listDTO.right_list];
+            const query = "INSERT INTO Board(name, user_id) VALUES(?,?)";
+            const params = [boardDTO.name, boardDTO.user_id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -57,10 +44,10 @@ class BoardModel {
     }
 
 
-    UPDATE(listDTO) {
+    UPDATE(boardDTO) {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE list SET name=?, left_list=?, right_list=? WHERE id = ?";
-            const params = [listDTO.name, listDTO.left_list, listDTO.right_list, listDTO.id];
+            const query = "UPDATE Board SET name=?, head=? WHERE id = ?";
+            const params = [boardDTO.name, boardDTO.head, boardDTO.id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -71,10 +58,10 @@ class BoardModel {
         })
     }
 
-    DELETE(list_id) {
+    DELETE(board_id) {
         return new Promise((resolve, reject) => {
-            const query = "DELETE FROM list WHERE id = ?";
-            connection.execute(query, list_id, (err, rows, fields) => {
+            const query = "DELETE FROM Board WHERE id = ?";
+            connection.query(query, board_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }

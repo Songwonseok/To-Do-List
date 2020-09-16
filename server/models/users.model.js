@@ -29,10 +29,10 @@ class UserModel {
         })
     }
 
-    INSERT(userDTO) {
+    INSERT(usersDTO) {
         return new Promise((resolve, reject) => {
-            const query = "INSERT INTO Users(email, password, name) VALUES(?,?,?)";
-            const params = [userDTO.email, userDTO.password, userDTO.name];
+            const query = "INSERT INTO Users(email, password, name, phone) VALUES(?,?,?,?)";
+            const params = [usersDTO.email, usersDTO.password, usersDTO.name, usersDTO.phone];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);

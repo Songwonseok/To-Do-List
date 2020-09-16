@@ -5,51 +5,37 @@ class BoardService {
         this.boardModel = new BoardModel();
     }
 
-    async findAll(user_id) {
+    async findOne(board_id) {
         try {
-            const lists = await this.boardModel.SELECT_ALL(user_id);
-            return lists;
+            const board = await this.boardModel.SELECT(board_id);
+            return board;
         } catch (err) {
             throw err;
         }
     }
 
-    async findOne(list_id) {
+    async create(boardDTO) {
         try {
-            const list = await this.boardModel.SELECT(list_id);
-            return list;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    async create(listDTO) {
-        SELECT_LAST
-        try {
-            const prevList = await this.boardModel.SELECT_LAST(listDTO.user_id);
-            if (prevList){
-                listDTO.left_list = prevList.id;
-                const inserId = await this.boardModel.INSERT(listDTO);
-
-                prevList.right_list = inserId;
-                await this.boardModel.UPDATE(prevList);
+                const inserId = await this.boardModel.INSERT(boardDTO);
                 return inserId;
-            }else{
-                listDTO.left_list = null;
-                const inserId = await this.boardModel.INSERT(listDTO);
-                return inserId;
-            }
         } catch (err) {
             throw err;
         }
     }
 
-    async update(listDTO) {
+    async update(boardDTO) {
         try {
-            listDTO.left_list = (listDTO.left_list) ? listDTO.left_list: null;
-            listDTO.right_list = (listDTO.right_list) ? listDTO.right_list : null;
-            const changedRows = await this.boardModel.UPDATE(listDTO);
+            const changedRows = await this.boardModel.UPDATE(boardDTO);
             return changedRows;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async delete(board_id) {
+        try {
+            const affectedRows = await this.boardModel.DELETE(board_id);
+            return affectedRows;
         } catch (err) {
             throw err;
         }

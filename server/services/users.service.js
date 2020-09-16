@@ -1,15 +1,17 @@
-const UserModel = require('../models/users.model')
+const UsersModel = require('../models/users.model')
+const BoardModel = require('../models/board.model')
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // 값이 높을 수록 비용 소요가 큼
 
-class UserService {
+class UsersService {
     constructor() {
-        this.userModel = new UserModel();
+        this.usersModel = new UsersModel();
+        this.boardModel = new BoardModel();
     }
 
     async findAll() {
         try{
-            const userList = await this.userModel.SELECT_ALL();
+            const userList = await this.usersModel.SELECT_ALL();
             return userList;
         }catch(err){
             throw err;
@@ -18,17 +20,26 @@ class UserService {
 
     async findOne(user_id) {
         try {
-            const user = await this.userModel.SELECT(user_id);
+            const user = await this.usersModel.SELECT(user_id);
             return user;
         } catch (err) {
             throw err;
         }
     }
-
-    async create(userDTO) {
+    
+    async getBoard(user_id) {
         try {
-            userDTO.password = await UserService.getHash(userDTO.password);
-            const inserId = await this.userModel.INSERT(userDTO);
+            const boards = await this.boardModel.SELECT_ALL(user_id);
+            return boards;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async create(usersDTO) {
+        try {
+            usersDTO.password = await UsersService.getHash(usersDTO.password);
+            const inserId = await this.usersModel.INSERT(usersDTO);
             return inserId;
         } catch (err) {
             throw err;
@@ -48,4 +59,4 @@ class UserService {
     }
 }
 
-module.exports = UserService;
+module.exports = UsersService;
