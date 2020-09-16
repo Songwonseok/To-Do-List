@@ -24,6 +24,10 @@ class CardService {
             if(board.head == null){
                 board.head = inserId;
                 await this.boardModel.UPDATE(board);
+            }else {
+                const last = await this.cardModel.SELECT_LAST(board.id);
+                last.next_card = inserId;
+                await this.cardModel.UPDATE_NODE(last);
             }
             return inserId;
         } catch (err) {
@@ -85,8 +89,12 @@ class CardService {
             const board = await this.boardModel.SELECT(card.board_id);
             
             if (board.head == card_id) {
-                board.head = null;
+                board.head = card.next_card;
                 await this.boardModel.UPDATE(board);
+            } else {
+                const prev = await this.cardModel.SELECT_PREV(card_id);
+                prev.next_card = card.next_card;
+                await this.cardModel.UPDATE_NODE(prev);
             }
 
             const affectedRows = await this.cardModel.DELETE(card_id);

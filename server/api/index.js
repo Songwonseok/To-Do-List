@@ -3,7 +3,7 @@ const router = express.Router();
 
 const users = require('./users/users.routes');
 const board = require('./board/board.routes');
-const card = require('./board/card.routes');
+const card = require('./card/card.routes');
 
 router.use('/users', users);
 router.use('/board', board);
