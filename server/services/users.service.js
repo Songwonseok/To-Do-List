@@ -1,4 +1,4 @@
-const UserModel = require('../models/userModel')
+const UserModel = require('../models/users.model')
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // 값이 높을 수록 비용 소요가 큼
 
