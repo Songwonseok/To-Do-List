@@ -19,12 +19,11 @@ CREATE TABLE Card (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     board_id INT NOT NULL,
     content varchar(300) NOT NULL,
-    next_card INT,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT NULL,
-    addedBy VARCHAR(64) NOT NULL,
+    next_card INT DEFAULT NULL,
+    addedBy INT NOT NULL,
     FOREIGN KEY(board_id) REFERENCES Board(id) ON DELETE cascade,
-    FOREIGN KEY(next_card)REFERENCES Card(id)
+    FOREIGN KEY(next_card) REFERENCES Card(id),
+    FOREIGN KEY(addedBy) REFERENCES Users(id)
     );
 
 ALTER TABLE Board ADD CONSTRAINT Head_card FOREIGN KEY(head) REFERENCES Card(id);
