@@ -1,14 +1,14 @@
 const UsersModel = require('../models/users.model')
-const BoardModel = require('../models/board.model')
-const CardModel = require('../models/card.model');
+const ColumnsModel = require('../models/columns.model')
+const NoteModel = require('../models/note.model');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // 값이 높을 수록 비용 소요가 큼
 
 class UsersService {
     constructor() {
         this.usersModel = new UsersModel();
-        this.boardModel = new BoardModel();
-        this.cardModel = new CardModel();
+        this.columnsModel = new ColumnsModel();
+        this.noteModel = new NoteModel();
     }
 
     async findAll() {
@@ -29,16 +29,16 @@ class UsersService {
         }
     }
     
-    async getBoard(user_id) {
+    async getColumns(user_id) {
         try {
-            const boards = await this.boardModel.SELECT_ALL(user_id);
+            const columns = await this.columnsModel.SELECT_ALL(user_id);
             
-            for (let i = 0; i < boards.length;i++){
-                const cardList = await this.cardModel.SELECT_ALL(boards[i].id);
-                const list = UsersService.getOrderList(boards[i], cardList);
-                boards[i].list = list;
+            for (let i = 0; i < columns.length;i++){
+                const noteList = await this.noteModel.SELECT_ALL(columns[i].id);
+                const list = UsersService.getOrderList(columns[i], noteList);
+                columns[i].list = list;
             }
-            return boards;
+            return columns;
         } catch (err) {
             throw err;
         }
@@ -66,13 +66,13 @@ class UsersService {
         })
     }
 
-    static getOrderList(board, cardList) {
+    static getOrderList(column, noteList) {
         const list = [];
-        if (board.head) {
-            let node = cardList.find(c => c.id == board.head);
+        if (column.head) {
+            let node = noteList.find(c => c.id == column.head);
             list.push(node);
-            while (node.next_card) {
-                node = cardList.find(c => c.id == node.next_card);
+            while (node.next_note) {
+                node = noteList.find(c => c.id == node.next_note);
                 list.push(node);
             }
         }

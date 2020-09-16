@@ -2,13 +2,13 @@ const mysql = require('mysql2');
 const DBconfig = require('../config/DBconfig');
 const connection = mysql.createConnection(DBconfig);
 
-class CardModel {
+class NoteModel {
     constructor() { }
 
-    SELECT_ALL(board_id) {
+    SELECT_ALL(columns_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT c.id, c.board_id, c.content, c.next_card, u.name AS addedBy FROM Card c JOIN Users u ON c.addedBy = u.id WHERE c.board_id = ?";
-            connection.query(query, board_id, (err, rows, fields) => {
+            const query = "SELECT n.id, n.columns_id, n.content, n.next_note, u.name AS addedBy FROM Note n JOIN Users u ON n.addedBy = u.id WHERE n.columns_id = ?";
+            connection.query(query, columns_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -17,10 +17,10 @@ class CardModel {
         })
     }
 
-    SELECT(card_id) {
+    SELECT(note_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT c.id, c.board_id, c.content, c.next_card, u.name AS addedBy FROM Card c JOIN Users u ON c.addedBy = u.id WHERE c.id = ?";
-            connection.query(query, card_id, (err, rows, fields) => {
+            const query = "SELECT n.id, n.columns_id, n.content, n.next_note, u.name AS addedBy FROM Note n JOIN Users u ON n.addedBy = u.id WHERE n.id = ?";
+            connection.query(query, note_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -29,10 +29,10 @@ class CardModel {
         })
     }
 
-    SELECT_PREV(card_id) {
+    SELECT_PREV(note_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Card WHERE next_card = ?";
-            connection.query(query, card_id, (err, rows, fields) => {
+            const query = "SELECT * FROM Note WHERE next_note = ?";
+            connection.query(query, note_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -41,10 +41,10 @@ class CardModel {
         })
     }
 
-    SELECT_LAST(board_id) {
+    SELECT_LAST(columns_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Card WHERE next_card IS NULL AND board_id = ?";
-            connection.query(query, board_id, (err, rows, fields) => {
+            const query = "SELECT * FROM Note WHERE next_note IS NULL AND columns_id = ?";
+            connection.query(query, columns_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -53,12 +53,13 @@ class CardModel {
         })
     }
 
-    INSERT(cardDTO) {
+    INSERT(noteDTO) {
         return new Promise((resolve, reject) => {
-            const query = "INSERT INTO Card(board_id, content, addedBy) VALUES(?,?,?)";
-            const params = [cardDTO.board_id, cardDTO.content, cardDTO.addedBy];
+            const query = "INSERT INTO Note(columns_id, content, addedBy) VALUES(?,?,?)";
+            const params = [noteDTO.columns_id, noteDTO.content, noteDTO.addedBy];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
+                    console.log(err);
                     reject(err);
                 }
                 const insertId = rows.insertId;
@@ -68,10 +69,10 @@ class CardModel {
     }
 
 
-    UPDATE(cardDTO) {
+    UPDATE(noteDTO) {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE Card SET content=? WHERE id = ?";
-            const params = [cardDTO.content,cardDTO.id];
+            const query = "UPDATE Note SET content=? WHERE id = ?";
+            const params = [noteDTO.content,noteDTO.id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -82,10 +83,10 @@ class CardModel {
         })
     }
 
-    UPDATE_NODE(cardDTO) {
+    UPDATE_NODE(noteDTO) {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE Card SET board_id=?, next_card=? WHERE id = ?";
-            const params = [cardDTO.board_id, cardDTO.next_card, cardDTO.id];
+            const query = "UPDATE Note SET columns_id=?, next_note=? WHERE id = ?";
+            const params = [noteDTO.columns_id, noteDTO.next_note, noteDTO.id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -96,10 +97,10 @@ class CardModel {
         })
     }
 
-    DELETE(card_id) {
+    DELETE(note_id) {
         return new Promise((resolve, reject) => {
-            const query = "DELETE FROM Card WHERE id = ?";
-            connection.query(query, card_id, (err, rows, fields) => {
+            const query = "DELETE FROM Note WHERE id = ?";
+            connection.query(query, note_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -110,6 +111,6 @@ class CardModel {
     }
 }
 
-module.exports = CardModel;
+module.exports = NoteModel;
 
 
