@@ -47,8 +47,17 @@ class UsersService {
     async create(usersDTO) {
         try {
             usersDTO.password = await UsersService.getHash(usersDTO.password);
-            const inserId = await this.usersModel.INSERT(usersDTO);
-            return inserId;
+            const insertId = await this.usersModel.INSERT(usersDTO);
+            const basicColumns = [ "해야할 일", "하는 중", "완료"];
+            basicColumns.forEach(async (b) =>{
+                console.log(insertId);
+                const columnDTO = {
+                    user_id: insertId,
+                    name: b
+                }
+                await this.columnsModel.INSERT(columnDTO);
+            })
+            return insertId;
         } catch (err) {
             throw err;
         }

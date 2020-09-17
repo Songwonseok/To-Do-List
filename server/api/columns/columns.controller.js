@@ -11,7 +11,7 @@ class ColumnsController {
                 const response = resObject(200, true, '컬럼 조회 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         };
@@ -23,14 +23,14 @@ class ColumnsController {
                     user_id: req.body.user_id
                 }
                 const data = await this.cService.create(columnsDTO);
-                const response = resObject(200, true, '컬럼 추가 성공', data);
-                res.send(response);
+                req.logData = data;
+                next();
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
-        this.updateColumns = async (req, res, next) => {
+        this.updateHead = async (req, res, next) => {
             try {
                 const columnsDTO = {
                     id:req.body.id,
@@ -38,10 +38,26 @@ class ColumnsController {
                     head: req.body.head
                 }
                 const data = await this.cService.update(columnsDTO);
-                const response = resObject(200, true, '컬럼 수정 성공', data);
+                const response = resObject(200, true, '컬럼 Head 수정 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage) ? err.sqlMessage : err.message, null);
+                res.send(response);
+            }
+        }
+
+        this.updateName = async (req, res, next) => {
+            try {
+                const columnsDTO = {
+                    id: req.body.id,
+                    name: req.body.name,
+                    head: req.body.head
+                }
+                const data = await this.cService.rename(columnsDTO);
+                req.logData = data;
+                next();
+            } catch (err) {
+                const response = resObject(400, false, (err.sqlMessage) ? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
@@ -50,10 +66,10 @@ class ColumnsController {
             try {
                 const columns_id = req.params.columnsId;
                 const data = await this.cService.delete(columns_id);
-                const response = resObject(200, true, '컬럼 삭제 성공', data);
-                res.send(response);
+                req.logData = data;
+                next();
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }

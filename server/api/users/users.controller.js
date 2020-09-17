@@ -10,7 +10,7 @@ class UsersController {
                 const response = resObject(200, true, '유저 조회 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         };
@@ -22,7 +22,7 @@ class UsersController {
                 const response = resObject(200, true, '유저 조회 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
@@ -34,7 +34,7 @@ class UsersController {
                 const response = resObject(200, true, '컬럼 조회 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
@@ -48,10 +48,10 @@ class UsersController {
                     phone : req.body.phone
                 }
                 const data = await this.uService.create(usersDTO);
-                const response = resObject(200, true, '유저 추가 성공', data);
+                const response = resObject(201, true, '유저 추가 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }

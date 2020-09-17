@@ -29,7 +29,8 @@ class NoteService {
                 last.next_note = inserId;
                 await this.noteModel.UPDATE_NODE(last);
             }
-            return inserId;
+            noteDTO.to_column = columns.name;
+            return noteDTO;
         } catch (err) {
             throw err;
         }
@@ -37,8 +38,9 @@ class NoteService {
 
     async update(noteDTO) {
         try {
-            const changedRows = await this.noteModel.UPDATE(noteDTO);
-            return changedRows;
+            const origin = await this.noteModel.SELECT(noteDTO.id);
+            await this.noteModel.UPDATE(noteDTO);
+            return `${origin.content} -> ${noteDTO.content}`;
         } catch (err) {
             throw err;
         }
@@ -88,6 +90,11 @@ class NoteService {
                 await this.columnsModel.UPDATE(originColumns);
             }
             await this.noteModel.UPDATE_NODE(noteDTO);
+
+            noteDTO.subject = origin.content;
+            noteDTO.to_column = currColumns.name;
+            noteDTO.from_column = originColumns.name;
+            return noteDTO;
         } catch (err) {
             throw err;
         }
@@ -106,8 +113,13 @@ class NoteService {
                 prev.next_note = note.next_note;
                 await this.noteModel.UPDATE_NODE(prev);
             }
-            const affectedRows = await this.noteModel.DELETE(note_id);
-            return affectedRows;
+            await this.noteModel.DELETE(note_id);
+
+            const logData = {
+                subject: note.content,
+                from_column: columns.name
+            }
+            return logData;
         } catch (err) {
             throw err;
         }

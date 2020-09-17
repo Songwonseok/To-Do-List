@@ -2,7 +2,7 @@ CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(64) UNIQUE NOT NULL,
     password VARCHAR(64) NOT NULL,
-    name VARCHAR(64) NOT NULL,
+    name VARCHAR(64) UNIQUE NOT NULL,
     phone VARCHAR(20) NOT NULL
     );
 
@@ -32,8 +32,9 @@ CREATE TABLE Log (
     action VARCHAR(64),
     user_id INT NOT NULL,
     subject varchar(300) NOT NULL,
-    from_list INT,
-    to_list INT,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    from_column VARCHAR(64),
+    to_column VARCHAR(64),
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE cascade
     );
     

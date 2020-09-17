@@ -12,7 +12,7 @@ class NoteController {
                 const response = resObject(200, true, '노트 조회 성공', data);
                 res.send(response);
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         };
@@ -25,10 +25,10 @@ class NoteController {
                     addedBy: req.body.addedBy,
                 }
                 const data = await this.nService.create(noteDTO);
-                const response = resObject(200, true, '노트 추가 성공', data);
-                res.send(response);
+                req.logData = data;
+                next();
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
@@ -36,13 +36,13 @@ class NoteController {
             try {
                 const noteDTO = {
                     id: req.body.id,
-                    content: req.body.name
+                    content: req.body.content
                 }
                 const data = await this.nService.update(noteDTO);
-                const response = resObject(200, true, '노트 수정 성공', data);
-                res.send(response);
+                req.logData = data;
+                next();
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
@@ -55,10 +55,10 @@ class NoteController {
                     next_note: req.body.next_note
                 }
                 const data = await this.nService.move(noteDTO);
-                const response = resObject(200, true, '노트 이동 성공', data);
-                res.send(response);
+                req.logData = data;
+                next();
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
@@ -67,10 +67,10 @@ class NoteController {
             try {
                 const note_id = req.params.noteId;
                 const data = await this.nService.delete(note_id);
-                const response = resObject(200, true, '노트 삭제 성공', data);
-                res.send(response);
+                req.logData = data;
+                next();
             } catch (err) {
-                const response = resObject(400, false, err.sqlMessage, null);
+                const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
                 res.send(response);
             }
         }
