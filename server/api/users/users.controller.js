@@ -55,6 +55,42 @@ class UsersController {
                 res.send(response);
             }
         }
+
+        this.login = async (req, res, next) => {
+            try {
+                const loginForm = {
+                    id: req.body.id,
+                    password: req.body.password
+                }
+                const checkResult = await this.uService.checkValid(loginForm);
+
+                if (checkResult.isLogin) {
+                    req.session.userInfo = {
+                        id: loginForm.id,
+                        name: checkResult.userName
+                    }
+                    const response = resObject(201, true, '로그인 성공', req.session.userInfo);
+                    res.send(response);
+                }else {
+                    const response = resObject(401, false, checkResult.message, null);
+                    res.send(response);
+                }
+            } catch (err) {
+                const response = resObject(400, false, (err.sqlMessage) ? err.sqlMessage : err.message, null);
+                res.send(response);
+            }
+        }
+
+        this.logout = async (req, res, next) => {
+            try {
+                req.session.destroy();
+                const response = resObject(200, true, '로그아웃 성공', null);
+                res.send(response);
+            } catch (err) {
+                const response = resObject(400, false, err.message, null);
+                res.send(response);
+            }
+        }
     }
 }
 

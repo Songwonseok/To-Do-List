@@ -28,6 +28,18 @@ class UserModel {
         })
     }
 
+    SELECT_BY_EMAIL(email) {
+        return new Promise((resolve, reject) => {
+            const query = "SELECT * FROM Users where email = ?";
+            connection.query(query, email, (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(rows[0]);
+            })
+        })
+    }
+
     INSERT(usersDTO) {
         return new Promise((resolve, reject) => {
             const query = "INSERT INTO Users(email, password, name, phone) VALUES(?,?,?,?)";

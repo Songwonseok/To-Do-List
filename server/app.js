@@ -7,6 +7,15 @@ const logger = require('morgan');
 const Router = require('./api/index')
 const app = express();
 
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
+app.use(session({ 
+  secret: 'j098 song1234',  // 암호화
+  resave: false,
+  saveUninitialized: true,
+  store: new FileStore()
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
