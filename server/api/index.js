@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const users = require('./users/users.routes');
-const board = require('./board/board.routes');
-const card = require('./card/card.routes');
+const columns = require('./columns/columns.routes');
+const note = require('./note/note.routes');
+const log = require('./log/log.routes')
 
 router.use('/users', users);
-router.use('/board', board);
-router.use('/card', card);
+router.use('/columns', columns);
+router.use('/note', note);
+router.use('/log', log);
 
 module.exports = router;

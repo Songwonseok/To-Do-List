@@ -1,13 +1,12 @@
 const mysql = require('mysql2');
 const DBconfig = require('../config/DBconfig');
 const connection = mysql.createConnection(DBconfig);
-
-class BoardModel {
+class ColumnsModel {
     constructor() { }
 
     SELECT_ALL(user_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Board where user_id = ?";
+            const query = "SELECT * FROM Columns where user_id = ?";
             connection.query(query, user_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -17,10 +16,10 @@ class BoardModel {
         })
     }
 
-    SELECT(board_id) {
+    SELECT(columns_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Board where id = ?";
-            connection.query(query, board_id, (err, rows, fields) => {
+            const query = "SELECT * FROM Columns where id = ?";
+            connection.query(query, columns_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -29,10 +28,10 @@ class BoardModel {
         })
     }
 
-    INSERT(boardDTO) {
+    INSERT(columnsDTO) {
         return new Promise((resolve, reject) => {
-            const query = "INSERT INTO Board(name, user_id) VALUES(?,?)";
-            const params = [boardDTO.name, boardDTO.user_id];
+            const query = "INSERT INTO Columns(name, user_id) VALUES(?,?)";
+            const params = [columnsDTO.name, columnsDTO.user_id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -43,10 +42,11 @@ class BoardModel {
         })
     }
 
-    UPDATE(boardDTO) {
+
+    UPDATE(columnsDTO) {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE Board SET name=?, head=? WHERE id = ?";
-            const params = [boardDTO.name, boardDTO.head, boardDTO.id];
+            const query = "UPDATE Columns SET name=?, head=? WHERE id = ?";
+            const params = [columnsDTO.name, columnsDTO.head, columnsDTO.id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -57,10 +57,10 @@ class BoardModel {
         })
     }
 
-    DELETE(board_id) {
+    DELETE(columns_id) {
         return new Promise((resolve, reject) => {
-            const query = "DELETE FROM Board WHERE id = ?";
-            connection.query(query, board_id, (err, rows, fields) => {
+            const query = "DELETE FROM Columns WHERE id = ?";
+            connection.query(query, columns_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -71,6 +71,6 @@ class BoardModel {
     }
 }
 
-module.exports = BoardModel;
+module.exports = ColumnsModel;
 
 
