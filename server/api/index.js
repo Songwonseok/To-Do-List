@@ -8,12 +8,12 @@ const log = require('./log/log.routes')
 const auth = require('../middleware/auth')
 
 router.get('/', (req,res,next) => {
-    res.render('static/index.html')
+    res.render('index')
 })
-router.use('/users', users);
+router.use('/api/users', users);
 router.use(auth);
-router.use('/columns', columns);
-router.use('/note', note);
-router.use('/log', log);
+router.use('/api/columns', columns);
+router.use('/api/note', note);
+router.use('/api/log', log);
 
 module.exports = router;

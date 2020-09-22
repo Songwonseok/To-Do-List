@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  
+  form(class='loginForm form', method='post')
+    div.modalTitle 로그인
+    table
+      tr
+        td
+          //- input.modalInput(type='email', placeholder='이메일',name='email', required)
+          input.modalInput(type='text', placeholder='이메일',name='email', required)
+      tr
+        td
+          input.modalInput(type='password', placeholder='비밀번호', name='password', required)
+      tr
+        td
+          input.modalSubmit(type='submit', value='로그인')
+      tr
+        td
+          span 아직 회원이 아니세요? 
+            a(href='/signup') 회원가입
+
+  script(type="module" src="/dist/login.bundle.js")

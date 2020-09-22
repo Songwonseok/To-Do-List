@@ -1,0 +1,37 @@
+const {$, $All} = require('./utils')
+const loginForm = $('.loginForm');
+
+const loginEventHandler = (event) => {
+    event.preventDefault()
+    const  payload = {
+        email: loginForm.email.value,
+        password: loginForm.password.value
+    };
+
+    fetch('/api/users/auth/login',{
+        method: 'POST',
+        mode:'cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then((res) => res.json())
+    .then((res) => {
+        alert('로그인 되었습니다.')
+        window.location.replace('/');
+    })
+    .catch((err) => {
+        alert(err);
+        window.location.replace('/login');
+    })
+   
+    
+}
+
+const init =() => {
+    
+    loginForm.addEventListener('submit', loginEventHandler);
+}
+
+init();

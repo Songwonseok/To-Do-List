@@ -65,18 +65,18 @@ class UsersService {
 
     async checkValid(loginForm) {
         try {   
-            const user = await this.usersModel.SELECT_BY_EMAIL(loginForm.id);
+            const user = await this.usersModel.SELECT_BY_EMAIL(loginForm.email);
             // 1. ID 체크
             if (!user) {
-                return { isLogin:false, message:'존재하지 않는 email입니다.'};
+                throw new Error('존재하지 않는 email입니다.')
             } else {
                 // 2. Password 체크
                 bcrypt.compare(loginForm.password, user.password, (err, isMatch) => {
                     if (!isMatch)
-                        return { isLogin: false, message: '비밀번호가 틀렸습니다.', };
+                        throw new Error('비밀번호가 틀렸습니다.')
                 });
                 // 3. ID와 Password가 맞다면 세션에 추가하고 Cookie 생성
-                return { isLogin: true, userName: user.name}
+                return { isLogin: true, id: user.id, userName: user.name}
             }
 
         } catch (err) {
