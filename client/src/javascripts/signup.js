@@ -25,7 +25,7 @@ const signupEventHandler = (event) => {
         })
         .catch((err) => {
             alert(err);
-            window.location.replace('/signup');
+            window.location.href='/signup';
         })
 
 

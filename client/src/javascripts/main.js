@@ -1,7 +1,7 @@
 const {$, $ALL} = require('./utils')
 
 const init = () => {
-    fetch('/api/users/loginCheck', {
+    fetch('/api/users/auth/loginCheck', {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -11,7 +11,7 @@ const init = () => {
     .then((res) => res.json())
     .then((json) => {
         if(!json.data){
-            window.location.href = '/login';
+            window.location.replace('/login');
         }
     })
     .catch((err) => {

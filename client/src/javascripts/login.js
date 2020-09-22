@@ -23,7 +23,7 @@ const loginEventHandler = (event) => {
     })
     .catch((err) => {
         alert(err);
-        window.location.replace('/login');
+        window.location.href='/login';
     })
    
     

@@ -90,18 +90,13 @@ class UsersController {
         }
 
         this.loginCheck = async (req, res, next) => {
-            console.log('체크');
-            try {
-                if (req.session.userInfo){
-                    const response = resObject(200, true, '로그인 O', true);
-                    res.send(response);   
-                }else {
-                    const response = resObject(200, true, '로그인 X', false);
-                    res.send(response);      
-                }
-            } catch (err) {
-                const response = resObject(400, false, err.message, null);
-                res.send(response);
+            if (req.session.userInfo){
+                const response = resObject(200, true, '로그인 O', true);
+                res.send(response);   
+            }else {
+                const response = resObject(200, true, '로그인 X', false);
+                res.send(response);      
+            }
             }
         }
 
