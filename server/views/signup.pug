@@ -1,8 +1,23 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  div#log
+  form(class='signupForm form', method='post')
+    div.formTitle 회원가입
+    table
+        tr
+            td
+                input.input(type='email', placeholder='이메일',name='email', required)
+        tr
+            td
+                input.input(type='password', placeholder='비밀번호', name='password', required)
+        tr
+            td
+                input.input(type='text', placeholder='이름',name='name', required)
+        tr
+            td
+                input.input(type='text', placeholder='휴대전화 ex) 010-0000-0000', name='phone',pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" ,required)
+        tr
+            td
+                input.submit(type='submit', value='회원가입')
 
   script(type="module" src="/dist/signup.bundle.js")
