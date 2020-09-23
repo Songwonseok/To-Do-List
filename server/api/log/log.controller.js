@@ -19,6 +19,7 @@ class LogController {
         this.insertNoteLog = async (req, res, next) => {
             try {
                 const logData =req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.addNote(logData);
             } catch (err) {
                 console.error(err);
@@ -30,6 +31,7 @@ class LogController {
         this.editNoteLog = async (req, res, next) => {
             try {
                 const logData = req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.updateNote(logData);
             } catch (err) {
                 console.error(err);
@@ -42,6 +44,7 @@ class LogController {
         this.moveNoteLog = async (req, res, next) => {
             try {
                 const logData = req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.moveNote(logData);
             } catch (err) {
                 console.error(err);
@@ -54,6 +57,7 @@ class LogController {
         this.removeNoteLog = async (req, res, next) => {
             try {
                 const logData = req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.removeNote(logData);
             } catch (err) {
                 console.error(err);
@@ -66,6 +70,7 @@ class LogController {
         this.insertColumnLog = async (req, res, next) => {
             try {
                 const logData = req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.addColumn(logData);
             } catch (err) {
                 console.error(err);
@@ -78,6 +83,7 @@ class LogController {
         this.editColumnLog = async (req, res, next) => {
             try {
                 const logData = req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.updateColumn(logData);
             } catch (err) {
                 console.error(err);
@@ -90,6 +96,7 @@ class LogController {
         this.removeColumnLog = async (req, res, next) => {
             try {
                 const logData = req.logData;
+                logData.user_id = req.session.userInfo.id;
                 await this.lService.removeColumn(logData);
             } catch (err) {
                 console.error(err);

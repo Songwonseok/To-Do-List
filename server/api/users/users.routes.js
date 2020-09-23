@@ -10,6 +10,6 @@ router.get('/auth/loginCheck', userController.loginCheck);
 
 router.get('/auth/logout', auth, userController.logout);
 router.get('/', auth, userController.findAllUsers);
-router.get('/:userId', auth, userController.findUsers);
-router.get('/columns/:userId', auth, userController.getColumns);
+router.get('/find', auth, userController.findUsers);
+router.get('/columns', auth, userController.getColumns);
 module.exports = router;

@@ -1,4 +1,4 @@
-const { $, $All } = require('./utils')
+import { $, postFetch } from './utils'
 const signupForm = $('.signupForm');
 
 const signupEventHandler = (event) => {
@@ -9,30 +9,19 @@ const signupEventHandler = (event) => {
         name: signupForm.name.value,
         phone: signupForm.phone.value
     };
-
-    fetch('/api/users', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+    postFetch('/api/users', payload)
+    .then((res) => {
+        alert('회원가입 되었습니다.')
+        window.location.replace('/');
     })
-        .then((res) => res.json())
-        .then((res) => {
-            alert('회원가입 되었습니다.')
-            window.location.replace('/');
-        })
-        .catch((err) => {
-            alert(err);
-            window.location.href='/signup';
-        })
+    .catch((err) => {
+        window.location.href='/signup';
+    })
 
 
 }
 
 const init = () => {
-
     signupForm.addEventListener('submit', signupEventHandler);
 }
 

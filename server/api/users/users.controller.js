@@ -17,7 +17,7 @@ class UsersController {
 
         this.findUsers = async (req, res, next) => {
             try {
-                const user_id = req.params.userId;
+                const user_id = req.session.userInfo.id;
                 const data = await this.uService.findOne(user_id);
                 const response = resObject(200, true, '유저 조회 성공', data);
                 res.send(response);
@@ -29,7 +29,7 @@ class UsersController {
 
         this.getColumns = async (req, res, next) => {
             try {
-                const user_id = req.params.userId;
+                const user_id = req.session.userInfo.id;
                 const data = await this.uService.getColumns(user_id);
                 const response = resObject(200, true, '컬럼 조회 성공', data);
                 res.send(response);
@@ -96,7 +96,6 @@ class UsersController {
             }else {
                 const response = resObject(200, true, '로그인 X', false);
                 res.send(response);      
-            }
             }
         }
 

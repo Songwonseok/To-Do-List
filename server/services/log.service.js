@@ -19,7 +19,7 @@ class LogService {
     async addNote(data) {
         try {
             const logDTO = {
-                // user_id: sessionStorage,
+                user_id: data.user_id,
                 user_id: 4,
                 subject : data.content,
                 to_column : data.to_column
@@ -33,7 +33,7 @@ class LogService {
     async updateNote(data) {
         try {
             const logDTO = {
-                // user_id: sessionStorage,
+                user_id: data.user_id,
                 user_id: 4,
                 subject : data,
             }
@@ -45,8 +45,6 @@ class LogService {
 
     async moveNote(data) {
         try {
-            // data.user_id = sessionStorage;
-            data.user_id =  4,
             await this.logModel.MOVE_NOTE(data);
         } catch (err) {
             throw err;
@@ -55,8 +53,6 @@ class LogService {
 
     async removeNote(data) {
         try {
-            // data.user_id = sessionStorage;
-            data.user_id = 4,
             await this.logModel.REMOVE_NOTE(data);
         } catch (err) {
             throw err;
@@ -74,7 +70,7 @@ class LogService {
     async updateColumn(data) {
         try {
             const logDTO = {
-                // user_id : sessionStorage,
+                user_id: data.user_id,
                 user_id: 4,
                 subject: data
             }
@@ -87,7 +83,7 @@ class LogService {
     async removeColumn(data) {
         try {
             const logDTO = {
-                // user_id : sessionStorage,
+                user_id: data.user_id,
                 user_id: 4,
                 subject: data
             }
