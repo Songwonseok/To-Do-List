@@ -11,7 +11,7 @@ router.get('/', (req,res,next) => {
     res.render('index')
 })
 router.use('/api/users', users);
-// router.use(auth);
+router.use(auth);
 router.use('/api/columns', columns);
 router.use('/api/note', note);
 router.use('/api/log', log);

@@ -20,7 +20,6 @@ class LogService {
         try {
             const logDTO = {
                 user_id: data.user_id,
-                user_id: 4,
                 subject : data.content,
                 to_column : data.to_column
             }
@@ -34,7 +33,6 @@ class LogService {
         try {
             const logDTO = {
                 user_id: data.user_id,
-                user_id: 4,
                 subject : data,
             }
             await this.logModel.UPDATE_NOTE(logDTO);
@@ -69,12 +67,7 @@ class LogService {
 
     async updateColumn(data) {
         try {
-            const logDTO = {
-                user_id: data.user_id,
-                user_id: 4,
-                subject: data
-            }
-            await this.logModel.UPDATE_COLUMN(logDTO);
+            await this.logModel.UPDATE_COLUMN(data);
         } catch (err) {
             throw err;
         }
@@ -84,7 +77,6 @@ class LogService {
         try {
             const logDTO = {
                 user_id: data.user_id,
-                user_id: 4,
                 subject: data
             }
             await this.logModel.REMOVE_COLUMN(logDTO);

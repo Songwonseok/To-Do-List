@@ -43,9 +43,24 @@ class ColumnsModel {
     }
 
 
+    RENAME(columnsDTO) {
+        return new Promise((resolve, reject) => {
+            const query = "UPDATE Columns SET name=? WHERE id = ?";
+            const params = [columnsDTO.name, columnsDTO.id];
+            console.log(params);
+            connection.execute(query, params, (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                const changedRows = rows.changedRows;
+                resolve(changedRows);
+            })
+        })
+    }
+
     UPDATE(columnsDTO) {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE Columns SET name=?, head=? WHERE id = ?";
+            const query = "UPDATE Columns SET head=? WHERE id = ?";
             const params = [columnsDTO.name, columnsDTO.head, columnsDTO.id];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {

@@ -2,7 +2,18 @@ extends layout
 
 block content
   header
-    h1 TODO
+    div.title TODO
   section.todo
-    
+    div.columnList
+
+    div.addColumn + Add Column
+    div(class="column_modal hidden")
+      div.modal_overlay
+      div.modal_content
+          //- div.modal_header Add Column
+          //- input(type="text", placeholder="컬럼 이름", name="name", value=123, required).modal_columnText
+          //- div.modal_btns
+          //-   div.submitBtn Add
+          //-   div.cancelBtn Cancel
+            
   script(type="module" src="/dist/main.bundle.js")

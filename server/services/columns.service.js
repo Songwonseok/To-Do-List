@@ -16,7 +16,8 @@ class ColumnsService {
 
     async create(columnsDTO) {
         try {
-            const inserId = await this.columnsModel.INSERT(columnsDTO);
+            const insertId = await this.columnsModel.INSERT(columnsDTO);
+            columnsDTO.column_id = insertId;
             columnsDTO.subject = `column ${columnsDTO.name}`
             return columnsDTO;
         } catch (err) {
@@ -34,9 +35,10 @@ class ColumnsService {
 
     async rename(columnsDTO) {
         try {
-            const origin = await this.cService.findOne(columnsDTO.id);
-            await this.columnsModel.UPDATE(columnsDTO);
-            return `Column ${origin.name} -> ${columnsDTO.name}`
+            const origin = await this.columnsModel.SELECT(columnsDTO.id);
+            await this.columnsModel.RENAME(columnsDTO);
+            columnsDTO.subject = `Column ${origin.name} -> ${columnsDTO.name}`;
+            return columnsDTO;
         } catch (err) {
             throw err;
         }
@@ -44,7 +46,7 @@ class ColumnsService {
 
     async delete(columns_id) {
         try {
-            const origin = await this.cService.findOne(columns_id);
+            const origin = await this.columnsModel.SELECT(columns_id);
             await this.columnsModel.DELETE(columns_id);
             return `Column ${origin.name}`
         } catch (err) {

@@ -20,7 +20,7 @@ class ColumnsController {
             try {
                 const columnsDTO = {
                     name: req.body.name,
-                    user_id: req.body.user_id
+                    user_id: req.session.userInfo.id
                 }
                 const data = await this.cService.create(columnsDTO);
                 req.logData = data;
@@ -34,7 +34,6 @@ class ColumnsController {
             try {
                 const columnsDTO = {
                     id:req.body.id,
-                    name: req.body.name,
                     head: req.body.head
                 }
                 const data = await this.cService.update(columnsDTO);
@@ -50,8 +49,7 @@ class ColumnsController {
             try {
                 const columnsDTO = {
                     id: req.body.id,
-                    name: req.body.name,
-                    head: req.body.head
+                    name: req.body.name
                 }
                 const data = await this.cService.rename(columnsDTO);
                 req.logData = data;
@@ -66,7 +64,10 @@ class ColumnsController {
             try {
                 const columns_id = req.params.columnsId;
                 const data = await this.cService.delete(columns_id);
-                req.logData = data;
+                const logData = {
+                    subject:data
+                }
+                req.logData = logData;
                 next();
             } catch (err) {
                 const response = resObject(400, false, (err.sqlMessage)? err.sqlMessage : err.message, null);
