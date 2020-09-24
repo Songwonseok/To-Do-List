@@ -22,7 +22,7 @@ class NoteController {
                 const noteDTO = {
                     columns_id: req.body.columns_id,
                     content: req.body.content,
-                    addedBy: req.body.addedBy,
+                    addedBy: req.session.userInfo.id,
                 }
                 const data = await this.nService.create(noteDTO);
                 req.logData = data;

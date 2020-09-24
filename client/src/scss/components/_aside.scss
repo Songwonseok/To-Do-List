@@ -4,10 +4,6 @@
     transition: margin-right 0.35s;
 }
 
-body {
-  overflow: hidden;
-}
-
 .sidenav {
   height: 100%;
   width: 0;
@@ -25,12 +21,6 @@ body {
 }
 
 .navHeader {
-  -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   background-color: $backgrey;
   font-weight: bold;
   margin-top: 0;
@@ -41,6 +31,7 @@ body {
   justify-content: space-between;
   border-bottom: solid;
   border-width: 1px;
+  border-color: darkgray;
 }
 
 .closebtn {
@@ -50,16 +41,15 @@ body {
   cursor: pointer;
 }
 
-.closebtn:hover {
-  color:#f1f1f1;
-}
 
 .menubtn {
   height: 40px;
-  width: 340px;
+  width: 360px;
   line-height: 40px;
   border-bottom: solid;
   border-width: 1px;
+  border-color: darkgray;
+
   text-align: center;
   font-weight: bold;
   cursor: pointer;
@@ -78,23 +68,17 @@ body {
 .loglist {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .log{
   display: flex;
-  -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   height: 90px;
-  width: 340px;
+  width: 360px;
   padding: 20px 10px 10px 10px;
   border-bottom: solid;
   border-width: 1px;
+  border-color: darkgray;
 }
 
 .icon {
@@ -110,7 +94,7 @@ body {
 .logtime {
   margin-top: 5px;
   font-size: 15px;
-  color:gainsboro;
+  color:darkgrey;
 }
 
 .blueword {

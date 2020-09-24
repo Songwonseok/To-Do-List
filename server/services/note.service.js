@@ -19,16 +19,17 @@ class NoteService {
     async create(noteDTO) {
         try {
             const columns = await this.columnsModel.SELECT(noteDTO.columns_id);
-            const inserId = await this.noteModel.INSERT(noteDTO);
+            const insertId = await this.noteModel.INSERT(noteDTO);
             
             if(columns.head == null){
-                columns.head = inserId;
+                columns.head = insertId;
                 await this.columnsModel.UPDATE(columns);
             }else {
                 const last = await this.noteModel.SELECT_LAST(columns.id);
-                last.next_note = inserId;
+                last.next_note = insertId;
                 await this.noteModel.UPDATE_NODE(last);
             }
+            noteDTO.id = insertId;
             noteDTO.to_column = columns.name;
             return noteDTO;
         } catch (err) {
@@ -38,9 +39,11 @@ class NoteService {
 
     async update(noteDTO) {
         try {
+            console.log(noteDTO);
             const origin = await this.noteModel.SELECT(noteDTO.id);
             await this.noteModel.UPDATE(noteDTO);
-            return `${origin.content} -> ${noteDTO.content}`;
+            noteDTO.subject = `${ origin.content } -> ${ noteDTO.content }`;
+            return noteDTO;
         } catch (err) {
             throw err;
         }

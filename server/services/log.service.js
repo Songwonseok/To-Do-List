@@ -18,12 +18,7 @@ class LogService {
 
     async addNote(data) {
         try {
-            const logDTO = {
-                user_id: data.user_id,
-                subject : data.content,
-                to_column : data.to_column
-            }
-            await this.logModel.ADD_NOTE(logDTO);
+            await this.logModel.ADD_NOTE(data);
         } catch (err) {
             throw err;
         }
@@ -31,11 +26,7 @@ class LogService {
 
     async updateNote(data) {
         try {
-            const logDTO = {
-                user_id: data.user_id,
-                subject : data,
-            }
-            await this.logModel.UPDATE_NOTE(logDTO);
+            await this.logModel.UPDATE_NOTE(data);
         } catch (err) {
             throw err;
         }

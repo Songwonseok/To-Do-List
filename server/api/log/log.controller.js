@@ -18,9 +18,9 @@ class LogController {
 
         this.insertNoteLog = async (req, res, next) => {
             const logData =req.logData;
-            logData.user_id = req.session.userInfo.id;
             try {
                 await this.lService.addNote(logData);
+                logData.addedBy = req.session.userInfo.name;
             } catch (err) {
                 console.error(err);
             } finally {

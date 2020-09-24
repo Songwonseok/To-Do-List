@@ -1,5 +1,18 @@
 @import 'common/reset', 'common/variable','components/modal', 'components/aside';
 
+body {
+    overflow-y: auto;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 header {
     transition: margin-left 0.5s;
     height: 60px;
@@ -12,11 +25,11 @@ header {
     display: flex;
 }
 
+
 .title {
     margin: auto;
     font-size: 40px;
 }
-
 
 .todo {
     display: flex;
@@ -26,12 +39,12 @@ header {
 .columnList{
   display: flex;
   height: 100%;
+  overflow-x: auto;
 }
 .column {
     background-color: $backgrey;
-    flex:none;
-    width: 280px;
-    min-height: 320px;
+    min-width: 285px;
+    min-height: 400px;
     height: 100%;
     margin-right: 15px;
     margin-bottom: 10px;
@@ -47,6 +60,13 @@ header {
     font-weight: bold;
     font-size: 14px;
     line-height: 20px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .columnTitle{
@@ -66,14 +86,7 @@ header {
     margin-right: 10px;
 }
 
-.columnName {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
+
 .addBtn{
     background-color: $backgrey;
     font-size: x-large;
@@ -96,9 +109,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-height: 550px;
     padding-top: 20px;
-    overflow-y: auto;
 }
 .note {
     display: flex;
@@ -124,7 +135,6 @@ header {
     width: 85%;
     padding-top: 10px;
     display: inline-block;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -145,9 +155,43 @@ header {
     color: darkgrey;
 }
 
+.dropdown {
+    height: 130px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+textarea {
+    resize: none;
+    height: 80%;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+}
+.dropdown_btns {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    margin-top: 5px;
+}
+
+.dropdown_btns > div{
+    width: 49%;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.cancel-btn {
+    background-color: $redBtnColor;
+}
+
 .addColumn{
     flex:none;
     width: 240px;
+    margin-left: 5px;
     height: 120px;
     border-style: dashed;
     border-width: 2px;

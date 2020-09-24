@@ -2,25 +2,32 @@ extends layout
 
 block content
   
-  header
+  header.no-select
     div.title
     span.openNav &#x2630;
 
   section.todo#main
     div.columnList
-
     div.addColumn + Add Column
-    div(class="column_modal hidden")
+    div.column_modal.modal.hidden
       div.modal_overlay
       div.modal_content
+    div.note_modal.modal.hidden
+      div.modal_overlay
+      div.modal_content
+
   aside#mySidenav.sidenav
-    div.navHeader
+    div.navHeader.no-select
       div &#x2630 Menu
-      div(class="closebtn") &times
-    div(class="signupbtn menubtn") 회원가입
-    div(class="logoutbtn menubtn") 로그아웃
+      div.closebtn &times
+    div.signupbtn.menubtn 
+      i.fas.fa-user-plus
+      span  회원가입
+    div.logoutbtn.menubtn
+      i.fas.fa-sign-out-alt
+      span  로그아웃
     div.loglist
-      div.navHeader
+      div.navHeader.no-select
         div 
           i.fas.fa-bell
           span  Activity

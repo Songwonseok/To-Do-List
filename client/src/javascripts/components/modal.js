@@ -1,32 +1,44 @@
 import { $, $All, getFetch, postFetch, putFetch, updateLog} from '../utils'
 import { Column } from '../components/column'
 export class Modal {
-    constructor(name, type, content=null, column_id=null){
+    constructor(name, type, content=null, id=null){
         this.name = name;
         this.type = type
         this.content = content;
-        this.column_id = column_id;
+        this.id = id;
     }
 
     render() {
-        return `<div class="modal_header">${this.name}<input class="modal_columnText" type="text" placeholder="컬럼 이름" name="name"${(this.content)? "value="+"'"+this.content +"'": ''} required />
-                    <div class="modal_btns">
-                        <div class="submitBtn">${this.type}</div>
-                        <div class="cancelBtn">Cancel</div>
-                    </div>
-                </div>`
+        if(this.name == 'Edit Note'){
+            return `<div class="modal_header">${this.name}
+                    <textarea class="modal_textarea" placeholder="내용" name="content">${this.content}</textarea>
+                        <div class="modal_btns">
+                            <div class="submitBtn">${this.type}</div>
+                            <div class="cancelBtn">Cancel</div>
+                        </div>
+                    </div>`
+        }else{
+            return `<div class="modal_header">${this.name}<input class="modal_columnText" type="text" placeholder="컬럼 이름" name="name"${(this.content)? "value="+"'"+this.content +"'": ''} />
+                        <div class="modal_btns">
+                            <div class="submitBtn">${this.type}</div>
+                            <div class="cancelBtn">Cancel</div>
+                        </div>
+                    </div>`
+        }
     }
 
     addEventHandler($modal) {
         const $cancelBtn = $('.cancelBtn',$modal);
         const $submitBtn = $('.submitBtn', $modal);
-
         $cancelBtn.addEventListener('click', this.cancelModal);
 
         if(this.type == 'Add')
             $submitBtn.addEventListener('click', this.addColumn);
         else if(this.type == 'Edit')
-            $submitBtn.addEventListener('click', this.editColumn);
+            if (this.name == 'Edit Note')
+                $submitBtn.addEventListener('click', this.editNote);
+            else
+                $submitBtn.addEventListener('click', this.editColumn);
     }
     
     cancelModal = (event) => {
@@ -69,16 +81,44 @@ export class Modal {
             return;
         }
         const payload = {
-            id: this.column_id,
+            id: this.id,
             name: name
         }
         putFetch('/api/columns/rename', payload)
             .then((json) => {
                 const columns = $All('.column');
                 for(let i=0;i<columns.length;i++){
-                    if (columns[i].dataset.id == this.column_id) {
+                    if (columns[i].dataset.id == this.id) {
                         const $name = $('.columnName', columns[i]);
                         $name.innerHTML = name;
+                        break;
+                    }
+                }
+                $modal.classList.toggle('hidden');
+            })
+            .then(() => {
+                updateLog();
+            })
+    }
+
+    editNote = (event) => {
+        const $modal = getModalRoot(event);
+        const content = $('.modal_textarea', $modal).value;
+        if (!content) {
+            alert('내용을 입력해주세요')
+            return;
+        }
+        const payload = {
+            id: this.id,
+            content: content
+        }
+        putFetch('/api/note/update', payload)
+            .then((json) => {
+                const notes = $All('.note');
+                for (let i = 0; i < notes.length; i++) {
+                    if (notes[i].dataset.id == this.id) {
+                        const $name = $('.noteName', notes[i]);
+                        $name.innerHTML = content;
                         break;
                     }
                 }

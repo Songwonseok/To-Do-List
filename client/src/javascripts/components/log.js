@@ -12,7 +12,7 @@ export class Log {
     }
 
     render() {
-        return `<div class="log"><span class="icon"><i class="fas fa-user-clock"></i></span>
+        return `<div class="log no-select"><span class="icon"><i class="fas fa-user-clock"></i></span>
                     <div class="logcontent"><span class="blueword">@${this.name} </span><span class="act">${this.action} </span><span class="blueword">${this.subject} </span><span>${this.toFrom}</span>
                         <div class="logtime">${this.logtime}</div>
                     </div>
@@ -34,7 +34,7 @@ export class Log {
     }
 
     get toFrom() {
-        const from = (this.from_column) ? `to ${this.from_column} ` : '';
+        const from = (this.from_column) ? `from ${this.from_column} ` : '';
         const to = (this.to_column)? `to ${this.to_column} `: '';
 
         return from+to;

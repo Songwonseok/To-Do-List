@@ -8,7 +8,7 @@ export class Note {
     render() {
         return `<div class="note" data-id=${this.id}>
                     <div class="noteHeader">
-                        <div class="noteTitle"><i class="far fa-edit"></i><span>${this.content}</span></div>
+                        <div class="noteTitle"><i class="far fa-edit"></i><span class="noteName">${this.content}</span></div>
                         <div class="noteRemoveBtn">&times</div>
                     </div>
                     <div class="noteFooter"><span class="added">Added by </span><span>${this.addedBy}</span></div>
