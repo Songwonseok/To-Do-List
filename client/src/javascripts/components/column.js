@@ -10,7 +10,6 @@ export class Column {
     }
 
     render(base) {
-        const $columnList = $('.columnList');
         const $columnDiv = document.createElement('div');
         const $dataset = document.createAttribute('data-id');
         $columnDiv.className = 'column';
@@ -24,13 +23,12 @@ export class Column {
         </div >
         <div class="columnBody"></div>`
 
-        $columnList.appendChild($columnDiv);
         const $columnBody = $('.columnBody', $columnDiv);
         this.list.forEach((n) => {
             const note = new Note(n.id, n.content, n.addedBy);
             this.addNote($columnBody, note);
         })
-        // this.addEventHandler($columnDiv);
+        return $columnDiv.innerHTML;
     }
 
     addNote($columnBody, note) {

@@ -50,9 +50,10 @@ export class Modal {
                 const data = json.data;
                 getFetch(`/api/columns/${data.column_id}`)
                     .then((json) => {
+                        const $columnList = $('.columnList');
                         const data = json.data;
                         const column = new Column(data.id, data.name, data.user_id, []);
-                        column.render();
+                        $columnList.innerHTML += column.render();
                         $modal.classList.toggle('hidden');
                     })
             })

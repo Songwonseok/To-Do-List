@@ -3,6 +3,13 @@ extends layout
 block content
   header
     div.title TODO
+
+  //- aside#mySidebar.w3-sidebar.w3-bar-block.w3-card.w3-animate-left(style='display:none')
+  //- button.w3-bar-item.w3-button.w3-large(onclick='w3_close()') Close &times;
+  //- a.w3-bar-item.w3-button(href='#') Link 1
+  //- a.w3-bar-item.w3-button(href='#') Link 2
+  //- a.w3-bar-item.w3-button(href='#') Link 3
+
   section.todo
     div.columnList
 
@@ -10,10 +17,5 @@ block content
     div(class="column_modal hidden")
       div.modal_overlay
       div.modal_content
-          //- div.modal_header Add Column
-          //- input(type="text", placeholder="컬럼 이름", name="name", value=123, required).modal_columnText
-          //- div.modal_btns
-          //-   div.submitBtn Add
-          //-   div.cancelBtn Cancel
-            
+
   script(type="module" src="/dist/main.bundle.js")

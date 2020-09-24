@@ -2,55 +2,13 @@ import {$, $All, getFetch, deleteFetch} from './utils'
 import {Column} from './components/column'
 import { Modal } from './components/modal'
 
-const init = () => {
-    getFetch('/api/users/auth/loginCheck')
-    .then((json) => {
-        if(!json.data){
-            window.location.replace('/login');
-        }else{
-            render();
-        }
-    })
-    .catch((err) => {
-        window.location.replace('/login');
-    })
-}
-
-const render =() => {
-    getFetch('/api/users/columns')
-        .then((json) => {
-            json.data.forEach((c) => {
-                const column = new Column(c.id, c.name, c.user_id, c.list);
-                column.render();
-            })
-        }).then(() => {
-            setEventHandler();
-        }).catch(err => {
-            console.log(err);
+const addOverlayEvent = () => {
+    const overlays = $All('.modal_overlay');
+    overlays.forEach(el => {
+        const $modal = el.parentElement;
+        el.addEventListener('click', () => {
+            $modal.classList.toggle('hidden');
         })
-}
-const setEventHandler = () => {
-    addOverlayEvent();
-    addColumnEvent();
-    editColumnEvent();
-    removeColumnEvent();
-}
-
-
-const editColumnEvent = () => {
-    const $columnList = $('.columnList');
-    const $column_modal = $('.column_modal');
-    const $modalContent = $('.modal_content', $column_modal);
-    $columnList.addEventListener('dblclick', (event) => {
-        if (event.target.className == 'columnName'){
-            const $column = event.target.closest('.column');
-            const id = $column.dataset.id;
-            const name = $('.columnName', $column).innerHTML;
-            const modal = new Modal('Edit Column', 'Edit', name, id);
-            $modalContent.innerHTML = modal.render();
-            modal.addEventHandler($column_modal);
-            $column_modal.classList.toggle('hidden');
-        }
     })
 }
 
@@ -66,10 +24,25 @@ const addColumnEvent = () => {
     })
 }
 
-const removeColumnEvent = () => {
+const editColumnEvent = () => {
     const $columnList = $('.columnList');
     const $column_modal = $('.column_modal');
     const $modalContent = $('.modal_content', $column_modal);
+    $columnList.addEventListener('dblclick', (event) => {
+        if (event.target.className == 'columnName') {
+            const $column = event.target.closest('.column');
+            const id = $column.dataset.id;
+            const name = $('.columnName', $column).innerHTML;
+            const modal = new Modal('Edit Column', 'Edit', name, id);
+            $modalContent.innerHTML = modal.render();
+            modal.addEventHandler($column_modal);
+            $column_modal.classList.toggle('hidden');
+        }
+    })
+}
+
+const removeColumnEvent = () => {
+    const $columnList = $('.columnList');
     $columnList.addEventListener('click', (event) => {
         if (event.target.className == 'closeBtn') {
             const $column = event.target.closest('.column');
@@ -86,14 +59,40 @@ const removeColumnEvent = () => {
     })
 }
 
-const addOverlayEvent = () => {
-    const overlays = $All('.modal_overlay');
-    overlays.forEach( el => {
-        const $modal = el.parentElement;
-        el.addEventListener('click', ()=> {
-            $modal.classList.toggle('hidden');
+const setEventHandler = () => {
+    addOverlayEvent();
+    addColumnEvent();
+    editColumnEvent();
+    removeColumnEvent();
+}
+
+const render = () => {
+    getFetch('/api/users/columns')
+        .then((json) => {
+            const $columnList = $('.columnList');
+            json.data.forEach((c) => {
+                const column = new Column(c.id, c.name, c.user_id, c.list);
+                $columnList.innerHTML += column.render();
+            })
+        }).then(() => {
+            setEventHandler();
+        }).catch(err => {
+            console.log(err);
         })
-    })
+}
+
+const init = () => {
+    getFetch('/api/users/auth/loginCheck')
+        .then((json) => {
+            if (!json.data) {
+                window.location.replace('/login');
+            } else {
+                render();
+            }
+        })
+        .catch((err) => {
+            window.location.replace('/login');
+        })
 }
 
 init();
