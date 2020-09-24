@@ -1,4 +1,4 @@
-import { $,$All, getFetch, postFetch, putFetch, deleteFetch} from '../utils'
+import { $, $All, getFetch, postFetch, putFetch, updateLog} from '../utils'
 import { Column } from '../components/column'
 export class Modal {
     constructor(name, type, content=null, column_id=null){
@@ -35,7 +35,6 @@ export class Modal {
     }
 
     addColumn = (event) => {
-        console.log('ADD');
         const $modal = getModalRoot(event);
         const name = $('.modal_columnText', $modal).value;
         if (!name) {
@@ -55,6 +54,9 @@ export class Modal {
                         const column = new Column(data.id, data.name, data.user_id, []);
                         $columnList.innerHTML += column.render();
                         $modal.classList.toggle('hidden');
+                    })
+                    .then(() => {
+                        updateLog();
                     })
             })
     }
@@ -81,6 +83,9 @@ export class Modal {
                     }
                 }
                 $modal.classList.toggle('hidden');
+            })
+            .then(() => {
+                updateLog();
             })
     }
 }

@@ -1,5 +1,5 @@
-import {$, $All, getFetch, deleteFetch} from './utils'
-import {Column} from './components/column'
+import {$, $All, getFetch, deleteFetch, updateLog} from './utils'
+import { Column } from './components/column'
 import { Modal } from './components/modal'
 
 const addOverlayEvent = () => {
@@ -53,9 +53,43 @@ const removeColumnEvent = () => {
                 .then(() => {
                     $columnList.removeChild($column);
                 })
+                .then(() => {
+                    updateLog();
+                })
             }
 
         }
+    })
+}
+
+
+
+const navEvent = () => {
+    const $openNav = $('.openNav');
+    const $closeBtn = $('.closebtn');
+    const $mySidenav = $('#mySidenav');
+    const $main = $('#main');
+    const $logoutbtn = $('.logoutbtn');
+    const $signupbtn = $('.signupbtn');
+
+    $openNav.addEventListener('click', () => {
+        $mySidenav.style.width = "340px";
+        $main.style.marginright = "340px";
+        updateLog();
+    });
+    $closeBtn.addEventListener('click', () => {
+        $mySidenav.style.width = "0";
+        $main.style.marginright = "0";
+    });
+
+    $logoutbtn.addEventListener('click', () => {
+        getFetch('/api/users/auth/logout')
+        .then(() => {
+            window.location.replace('/');
+        })
+    })
+    $signupbtn.addEventListener('click', () => {
+        window.location.href = '/signup';
     })
 }
 
@@ -64,7 +98,17 @@ const setEventHandler = () => {
     addColumnEvent();
     editColumnEvent();
     removeColumnEvent();
+    navEvent();
 }
+const headerRender = () => {
+    getFetch('/api/users/find')
+    .then(json => {
+        const user = json.data;
+        const $header = $('.title');
+        $header.innerHTML = `${user.name}'s To-Do List`
+    })
+}
+
 
 const render = () => {
     getFetch('/api/users/columns')
@@ -74,12 +118,18 @@ const render = () => {
                 const column = new Column(c.id, c.name, c.user_id, c.list);
                 $columnList.innerHTML += column.render();
             })
-        }).then(() => {
+        })
+        .then(() => {
+            headerRender();
+        })
+        .then(() => {
             setEventHandler();
         }).catch(err => {
             console.log(err);
         })
 }
+
+
 
 const init = () => {
     getFetch('/api/users/auth/loginCheck')
@@ -93,6 +143,6 @@ const init = () => {
         .catch((err) => {
             window.location.replace('/login');
         })
-}
+    }
 
 init();

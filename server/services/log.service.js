@@ -75,11 +75,7 @@ class LogService {
     
     async removeColumn(data) {
         try {
-            const logDTO = {
-                user_id: data.user_id,
-                subject: data
-            }
-            await this.logModel.REMOVE_COLUMN(logDTO);
+            await this.logModel.REMOVE_COLUMN(data);
             return affectedRows;
         } catch (err) {
             throw err;

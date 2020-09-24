@@ -7,7 +7,7 @@ class LogModel {
 
     SELECT_USERLOG(user_id) {
         return new Promise((resolve, reject) => {
-            const query = "SELECT l.id, l.action, u.name, l.subject l.from_column, l.to_column, l.createAt FROM Log l INNER JOIN Users u ON l.user_id = u.id WHERE l.user_id = ? ORDER BY l.createdAt DESC";
+            const query = "SELECT l.id, l.action, u.name, l.subject, l.from_column, l.to_column, l.createdAt FROM Log l INNER JOIN Users u ON l.user_id = u.id WHERE l.user_id = ? ORDER BY l.createdAt DESC";
             connection.query(query, user_id, (err, rows, fields) => {
                 if (err) {
                     reject(err);
@@ -105,7 +105,7 @@ class LogModel {
     REMOVE_COLUMN(info) {
         return new Promise((resolve, reject) => {
             const query = "INSERT INTO Log(action, user_id, subject) VALUES('removed',?,?)";
-            const params = [info.user_id, info.subject, info.from_column];
+            const params = [info.user_id, info.subject];
             connection.execute(query, params, (err, rows, fields) => {
                 if (err) {
                     reject(err);

@@ -18,7 +18,7 @@ class ColumnsService {
         try {
             const insertId = await this.columnsModel.INSERT(columnsDTO);
             columnsDTO.column_id = insertId;
-            columnsDTO.subject = `column ${columnsDTO.name}`
+            columnsDTO.subject = `Column(${columnsDTO.name})`
             return columnsDTO;
         } catch (err) {
             throw err;
@@ -37,7 +37,7 @@ class ColumnsService {
         try {
             const origin = await this.columnsModel.SELECT(columnsDTO.id);
             await this.columnsModel.RENAME(columnsDTO);
-            columnsDTO.subject = `Column ${origin.name} -> ${columnsDTO.name}`;
+            columnsDTO.subject = `Column(${origin.name} -> ${columnsDTO.name})`;
             return columnsDTO;
         } catch (err) {
             throw err;
@@ -48,7 +48,7 @@ class ColumnsService {
         try {
             const origin = await this.columnsModel.SELECT(columns_id);
             await this.columnsModel.DELETE(columns_id);
-            return `Column ${origin.name}`
+            return `Column(${origin.name})`
         } catch (err) {
             throw err;
         }

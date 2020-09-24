@@ -1,4 +1,4 @@
-import {$,$All} from '../utils'
+import {$} from '../utils'
 import {Note} from './note'
 
 export class Column {
@@ -28,7 +28,7 @@ export class Column {
             const note = new Note(n.id, n.content, n.addedBy);
             this.addNote($columnBody, note);
         })
-        return $columnDiv.innerHTML;
+        return $columnDiv.outerHTML;
     }
 
     addNote($columnBody, note) {

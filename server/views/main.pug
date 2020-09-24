@@ -1,21 +1,28 @@
 extends layout
 
 block content
+  
   header
-    div.title TODO
+    div.title
+    span.openNav &#x2630;
 
-  //- aside#mySidebar.w3-sidebar.w3-bar-block.w3-card.w3-animate-left(style='display:none')
-  //- button.w3-bar-item.w3-button.w3-large(onclick='w3_close()') Close &times;
-  //- a.w3-bar-item.w3-button(href='#') Link 1
-  //- a.w3-bar-item.w3-button(href='#') Link 2
-  //- a.w3-bar-item.w3-button(href='#') Link 3
-
-  section.todo
+  section.todo#main
     div.columnList
 
     div.addColumn + Add Column
     div(class="column_modal hidden")
       div.modal_overlay
       div.modal_content
+  aside#mySidenav.sidenav
+    div.navHeader
+      div &#x2630 Menu
+      div(class="closebtn") &times
+    div(class="signupbtn menubtn") 회원가입
+    div(class="logoutbtn menubtn") 로그아웃
+    div.loglist
+      div.navHeader
+        div 
+          i.fas.fa-bell
+          span  Activity
 
   script(type="module" src="/dist/main.bundle.js")

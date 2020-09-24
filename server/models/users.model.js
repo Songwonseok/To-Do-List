@@ -4,17 +4,6 @@ const connection = mysql.createConnection(DBconfig);
 
 class UserModel {
     constructor(){}
-    SELECT_ALL() {
-        return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM Users";
-            connection.query(query, (err, rows, fields) => {
-                if(err){
-                    reject(err);
-                }
-                resolve(rows)
-            })
-        })
-    }
 
     SELECT(user_id) {
         return new Promise((resolve, reject) => {

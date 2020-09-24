@@ -1,3 +1,5 @@
+import { Log } from '../components/log';
+
 export const $ = (selector, base = document) => base.querySelector(selector)
 export const $All = (selector, base = document) => base.querySelectorAll(selector)
 
@@ -42,3 +44,19 @@ export const deleteFetch = ((url) => {
         }
     }).then((res) => res.json())
 })
+
+export const updateLog = () => {
+    getFetch('/api/log')
+        .then((json) => {
+            const $logList = $('.loglist');
+            const $navHeader = $('.navHeader', $logList);
+            const logs = json.data;
+            const now = new Date();
+            let logInner = '';
+            logs.forEach(l => {
+                const log = new Log(l.action, l.name, l.subject, l.createdAt, now, (l.to_column) ? l.to_column:'', (l.from_column)? l.from_column:'');
+                logInner += log.render();
+            })
+            $logList.innerHTML = $navHeader.outerHTML + logInner;
+        })
+}

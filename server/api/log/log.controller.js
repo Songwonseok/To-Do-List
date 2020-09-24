@@ -6,7 +6,7 @@ class LogController {
 
         this.getUserLogs = async (req, res, next) => {
             try {
-                const user_id = req.params.userId;
+                const user_id = req.session.userInfo.id;
                 const data = await this.lService.read(user_id);
                 const response = resObject(200, true, '로그 조회 성공', data);
                 res.send(response);

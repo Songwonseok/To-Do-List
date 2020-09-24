@@ -1,18 +1,20 @@
-@import 'common/reset', 'common/variable','components/modal';
+@import 'common/reset', 'common/variable','components/modal', 'components/aside';
 
 header {
-    height: 100px;
+    transition: margin-left 0.5s;
+    height: 60px;
     width:100%;
     background-color: black;
     color: white;
     text-align: center;
+    line-height: 60px;
     font-weight: bold;
     display: flex;
 }
 
 .title {
     margin: auto;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 
@@ -22,14 +24,17 @@ header {
     padding: 30px;
 }
 .columnList{
-  display: flex;  
+  display: flex;
+  height: 100%;
 }
 .column {
-    background-color:  rgb(239,241,243);
+    background-color: $backgrey;
     flex:none;
-    width: 300px;
-    min-height: 500px;
+    width: 280px;
+    min-height: 320px;
+    height: 100%;
     margin-right: 15px;
+    margin-bottom: 10px;
     border-radius: 8px;
     box-shadow: $shadow;
 }
@@ -70,7 +75,7 @@ header {
     user-select: none;
 }
 .addBtn{
-    background-color: rgb(239,241,243);
+    background-color: $backgrey;
     font-size: x-large;
     font-weight: bold;
     margin-left: auto;
@@ -79,7 +84,7 @@ header {
     cursor: pointer;
 }
 .closeBtn{
-    background-color: rgb(239,241,243);
+    background-color:$backgrey;
     font-size: x-large;
     font-weight: bold;
     color:darkgrey;
@@ -91,15 +96,18 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    justify-content: space-around;
+    max-height: 550px;
+    padding-top: 20px;
+    overflow-y: auto;
 }
 .note {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-top: auto;
+    flex:none;
     margin-bottom: 10px;
-    height: 80px;
+    height: 70px;
     width: 90%;
     background-color: white;
     border-radius: 8px;
@@ -139,7 +147,7 @@ header {
 
 .addColumn{
     flex:none;
-    width: 250px;
+    width: 240px;
     height: 120px;
     border-style: dashed;
     border-width: 2px;
