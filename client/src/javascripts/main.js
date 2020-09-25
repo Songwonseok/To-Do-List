@@ -239,9 +239,9 @@ const setEventHandler = () => {
     dropdownEvent('cancel-btn');
     watchBtn();
     addNoteEvent();
-    editNoteEvent();
     columnDnDEvent();
     noteDnDEvent();
+    editNoteEvent();
 }
 const headerRender = () => {
     getFetch('/api/users/find')
@@ -259,7 +259,6 @@ const render = () => {
             json.data.forEach((c) => {
                 const column = new Column(c.id, c.name, c.user_id, c.list);
                 $columnList.innerHTML += column.render();
-                // dndColumnHandler(findColumn(column.id));
             })
         })
         .then(() => {

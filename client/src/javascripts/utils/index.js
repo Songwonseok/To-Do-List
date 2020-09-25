@@ -63,6 +63,7 @@ export const findNote = (id) => {
         }
     }
 }
+
 export const updateLog = () => {
     getFetch('/api/log')
         .then((json) => {

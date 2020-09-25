@@ -1,4 +1,4 @@
-iit pull origin release
+git pull origin release
 npm install
 npx webpack
-pm2 start todoApp
+pm2 start www
