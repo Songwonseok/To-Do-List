@@ -1,4 +1,4 @@
 git pull origin release
-cd ./server
 npm install
+npx webpack
 pm2 start www

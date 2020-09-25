@@ -17,8 +17,6 @@ const signupEventHandler = (event) => {
     .catch((err) => {
         window.location.href='/signup';
     })
-
-
 }
 
 const init = () => {

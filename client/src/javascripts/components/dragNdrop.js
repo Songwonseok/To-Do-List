@@ -70,7 +70,7 @@ const onDrop = (event) => {
                 $('.circle',$column).innerHTML++;
             })
     }
-    updateLog();
+    // updateLog();
 }
 
 export const dndColumnHandler = ($column) => {

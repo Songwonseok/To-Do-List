@@ -6,7 +6,6 @@ CREATE TABLE Users (
     phone VARCHAR(20) NOT NULL
     );
 
-
 CREATE TABLE Columns (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(64),
