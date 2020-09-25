@@ -81,6 +81,5 @@ export const dndColumnHandler = ($column) => {
 
 export const dndNoteHandler = ($note) => {
     $note.addEventListener('dragstart', onDragstart);
-    $note.addEventListener('dragend', onDragend);
 }
 
