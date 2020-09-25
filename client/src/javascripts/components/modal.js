@@ -1,4 +1,4 @@
-import { $, getFetch, postFetch, putFetch, updateLog, findColumn, findNote, watchBtn} from '../utils'
+import { $, getFetch, postFetch, putFetch, updateLog, findColumn, findNote, watchBtn, $All} from '../utils'
 import { Column } from '../components/column';
 import { dndColumnHandler, dndNoteHandler} from './dragNdrop';
 export class Modal {
@@ -69,8 +69,13 @@ export class Modal {
                         $modal.classList.toggle('hidden');
                         return column.id
                     })
-                    .then( id => {
-                        dndColumnHandler(findColumn(id));
+                    .then( _ => {
+                        $All('.column').forEach($c => {
+                            dndColumnHandler($c);
+                            $All('.note', $c).forEach( $n => {
+                                dndNoteHandler($n);
+                            })
+                        });
                         watchBtn();
                     })
                     .then(() => {
