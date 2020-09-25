@@ -3,6 +3,8 @@ import { Log } from '../components/log';
 export const $ = (selector, base = document) => base.querySelector(selector)
 export const $All = (selector, base = document) => base.querySelectorAll(selector)
 
+const $columnList = $('.columnList');
+
 export const getFetch = ((url) => {
     return fetch(url, {
         method: 'GET',
@@ -78,4 +80,30 @@ export const updateLog = () => {
             })
             $logList.innerHTML = $navHeader.outerHTML + logInner;
         })
+}
+
+export const watchBtn = () => {
+    const $textareas = $All('textarea');
+    $textareas.forEach($el => {
+        $el.addEventListener('keyup', (event) => {
+            const $dropdown = $el.closest('.dropdown')
+            const $noteAddBtn = $('.note-add-btn', $dropdown);
+            if ($el.value) {
+                $noteAddBtn.style.pointerEvents = 'auto';
+                $noteAddBtn.style.backgroundColor = 'rgb(67,219,207)';
+            } else {
+                disableBtn($noteAddBtn);
+            }
+        })
+    })
+
+    $columnList.addEventListener('keyup', (event) => {
+        if (event.target == '')
+            if ($textarea.value) {
+                $noteAddBtn.style.pointerEvents = 'auto';
+                $noteAddBtn.style.backgroundColor = 'rgb(67,219,207)';
+            } else {
+                disableBtn($noteAddBtn);
+            }
+    })
 }

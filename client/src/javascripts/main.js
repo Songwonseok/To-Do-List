@@ -1,4 +1,4 @@
-import { $, $All, getFetch, postFetch, deleteFetch, updateLog, findColumn, findNote } from './utils'
+import { $, $All, getFetch, postFetch, deleteFetch, updateLog, watchBtn } from './utils'
 import { Column } from './components/column'
 import { Note } from './components/note'
 import { Modal } from './components/modal'
@@ -78,31 +78,7 @@ const dropdownEvent = (node) => {
     })
 }
 
-const watchBtn = () => {
-    const $textareas = $All('textarea');
-    $textareas.forEach($el => {
-        $el.addEventListener('keyup', (event) => {
-            const $dropdown = $el.closest('.dropdown')
-            const $noteAddBtn = $('.note-add-btn', $dropdown);
-            if ($el.value) {
-                $noteAddBtn.style.pointerEvents = 'auto';
-                $noteAddBtn.style.backgroundColor = 'rgb(67,219,207)';
-            } else {
-                disableBtn($noteAddBtn);
-            }
-        })
-    })
 
-    $columnList.addEventListener('keyup', (event) => {
-        if (event.target == '')
-            if ($textarea.value) {
-                $noteAddBtn.style.pointerEvents = 'auto';
-                $noteAddBtn.style.backgroundColor = 'rgb(67,219,207)';
-            } else {
-                disableBtn($noteAddBtn);
-            }
-    })
-}
 const addNoteEvent = () => {
     $columnList.addEventListener('click', (event) => {
         if (event.target.className == 'note-add-btn'){
