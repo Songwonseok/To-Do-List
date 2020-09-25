@@ -78,9 +78,7 @@ export class Modal {
                         });
                         watchBtn();
                     })
-                    .then(() => {
-                        updateLog();
-                    })
+                    .then(updateLog);
             })
     }
 

@@ -54,8 +54,6 @@ const removeColumnEvent = () => {
                 deleteFetch(`/api/columns/${id}`)
                     .then(() => {
                         $columnList.removeChild($column);
-                    })
-                    .then(() => {
                         updateLog();
                     })
             }
@@ -106,10 +104,8 @@ const addNoteEvent = () => {
                     $All('.note',$columnBody).forEach($el => {
                         dndNoteHandler($el);     
                     })
-                })  
-                .then( () => {
                     updateLog();
-                })
+                })  
         }
     })
 }
@@ -130,8 +126,6 @@ const removeNoteEvent = () => {
                     .then((json) => {
                         $columnBody.removeChild($note);
                         $circle.innerHTML--;
-                    })
-                    .then( () => {
                         updateLog();
                     })
             }
@@ -236,11 +230,7 @@ const render = () => {
                 const column = new Column(c.id, c.name, c.user_id, c.list);
                 $columnList.innerHTML += column.render();
             })
-        })
-        .then(() => {
             headerRender();
-        })
-        .then(() => {
             setEventHandler();
         }).catch(err => {
             console.log(err);

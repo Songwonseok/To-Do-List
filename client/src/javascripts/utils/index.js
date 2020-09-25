@@ -74,10 +74,11 @@ export const updateLog = () => {
             const logs = json.data;
             const now = new Date();
             let logInner = '';
-            logs.forEach(l => {
-                const log = new Log(l.action, l.name, l.subject, l.createdAt, now, (l.to_column) ? l.to_column:'', (l.from_column)? l.from_column:'');
-                logInner += log.render();
+            logs.reduce((logInner,log) => {
+                const log = new Log(l.action, l.name, l.subject, l.createdAt, now, (l.to_column) ? l.to_column : '', (l.from_column) ? l.from_column : '');
+                return logInner + log.render();
             })
+
             $logList.innerHTML = $navHeader.outerHTML + logInner;
         })
 }
