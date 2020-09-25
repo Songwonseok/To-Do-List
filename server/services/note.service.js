@@ -55,16 +55,21 @@ class NoteService {
             const origin = await this.noteModel.SELECT(noteDTO.id);
             const originColumns = await this.columnsModel.SELECT(origin.columns_id);
             
+            if (currColumns.id == originColumns.id && noteDTO.next_note == origin.next_note)
+                return null;
+
             // 1. next_note가 있을 때
             if(noteDTO.next_note){
                 const next = await this.noteModel.SELECT(noteDTO.next_note);
                 // note의 위치가 top인지 확인
                 if (currColumns.head == next.id) {
                     currColumns.head = noteDTO.id;
+                    await this.updatePrev(origin, originColumns)
                     await this.columnsModel.UPDATE(currColumns);
                 } else {
                     const next_prev = await this.noteModel.SELECT_PREV(next.id);
                     next_prev.next_note = noteDTO.id;
+                    await this.updatePrev(origin, originColumns)
                     await this.noteModel.UPDATE_NODE(next_prev);
                 }
             }
@@ -76,21 +81,16 @@ class NoteService {
                 // last가 존재하면 bottom, 없으면 top
                 if (last) {
                     last.next_note = noteDTO.id;
+                    await this.updatePrev(origin, originColumns)
                     await this.noteModel.UPDATE_NODE(last);
                 }else {
                     currColumns.head = noteDTO.id;
                     await this.columnsModel.UPDATE(currColumns);
+                    await this.updatePrev(origin, originColumns)
                 }
             }
-            
-            const prev = await this.noteModel.SELECT_PREV(origin.id);
-            if (prev) {
-                prev.next_note = origin.next_note;
-                await this.noteModel.UPDATE_NODE(prev);
-            } else {
-                originColumns.head = origin.next_note;
-                await this.columnsModel.UPDATE(originColumns);
-            }
+
+            //내꺼 수정
             await this.noteModel.UPDATE_NODE(noteDTO);
 
             noteDTO.subject = origin.content;
@@ -99,6 +99,17 @@ class NoteService {
             return noteDTO;
         } catch (err) {
             throw err;
+        }
+    }
+
+    async updatePrev(origin, originColumns) {
+        const prev = await this.noteModel.SELECT_PREV(origin.id);
+        if (prev) {
+            prev.next_note = origin.next_note;
+            await this.noteModel.UPDATE_NODE(prev);
+        } else {
+            originColumns.head = origin.next_note;
+            await this.columnsModel.UPDATE(originColumns);
         }
     }
 
@@ -128,5 +139,7 @@ class NoteService {
     }
 
 }
+
+
 
 module.exports = NoteService;

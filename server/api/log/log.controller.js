@@ -43,6 +43,9 @@ class LogController {
 
         this.moveNoteLog = async (req, res, next) => {
             const logData = req.logData;
+            if(!logData)
+                res.send({message: null});
+
             logData.user_id = req.session.userInfo.id;
             try {
                 await this.lService.moveNote(logData);

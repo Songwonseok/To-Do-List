@@ -1,5 +1,4 @@
-import { $, $All, getFetch, postFetch, putFetch, updateLog, findNote, findColumn } from '../utils'
-import { Column } from '../components/column'
+import { $,putFetch, updateLog, findNote} from '../utils'
 
 
 const onDragleave = (event) => {
@@ -22,21 +21,11 @@ const onDragover = (event) => {
 }
 
 const onDragstart = (event) => {
-    console.log(event.target);
-    console.log('드래그 시작 id:' + event.target.dataset.id);
     event.dataTransfer.setData("text/plain", event.target.dataset.id);
 }
 
-const onDragend = (event) => {
-    console.log('드래그 끝');
-}
-
-const onclick = (event) => {
-    console.log(event.target.dataset.id);
-}
 
 const onDrop = (event) => {
-    console.log('드랍');
     const id = event.dataTransfer.getData('text');
     const $note = findNote(id);
     const $origin = $note.closest('.column');
@@ -47,7 +36,11 @@ const onDrop = (event) => {
 
     if (event.target.closest('.note')) {
         const $nextNote = event.target.closest('.note');
-        if ($nextNote.style.backgroundColor== 'darkgrey'){
+        if ($nextNote.style.backgroundColor == 'darkgrey' ){
+            if ($note.dataset.id == $nextNote.dataset.id ){
+                $nextNote.style.backgroundColor = "white";
+                return;
+            }
             const payload = {
                 id: $note.dataset.id,
                 columns_id: $column.dataset.id,
@@ -58,6 +51,8 @@ const onDrop = (event) => {
                 $nextNote.style.backgroundColor = "white";
                 $('.columnBody', $origin).removeChild($note);
                 $('.columnBody', $column).insertBefore($note, $nextNote);
+                $('.circle', $origin).innerHTML--;
+                $('.circle', $column).innerHTML++;
             })
         }
     }else{
@@ -70,8 +65,12 @@ const onDrop = (event) => {
             .then(json => {
                 $('.columnBody', $origin).removeChild($note);
                 $('.columnBody', $column).appendChild($note);
+
+                $('.circle', $origin).innerHTML--;
+                $('.circle',$column).innerHTML++;
             })
     }
+    updateLog();
 }
 
 export const dndColumnHandler = ($column) => {
@@ -83,6 +82,5 @@ export const dndColumnHandler = ($column) => {
 export const dndNoteHandler = ($note) => {
     $note.addEventListener('dragstart', onDragstart);
     $note.addEventListener('dragend', onDragend);
-    $note.addEventListener('click', onclick)
 }
 
