@@ -1,7 +1,8 @@
-import { $, $All, getFetch, postFetch, deleteFetch, updateLog } from './utils'
+import { $, $All, getFetch, postFetch, deleteFetch, updateLog, findColumn, findNote } from './utils'
 import { Column } from './components/column'
 import { Note } from './components/note'
 import { Modal } from './components/modal'
+import { dndColumnHandler, dndNoteHandler } from './components/dragNdrop';
 
 const $columnList = $('.columnList');
 
@@ -123,6 +124,14 @@ const addNoteEvent = () => {
                     $textarea.value = '';
                     disableBtn(event.target);
                     $dropdown.classList.toggle('hidden');
+                    return $columnBody;
+                })
+                .then($columnBody => {
+                    $All('.note',$columnBody).forEach($el => {
+                        dndNoteHandler($el);     
+                    })
+                })  
+                .then( () => {
                     updateLog();
                 })
         }
@@ -145,6 +154,8 @@ const removeNoteEvent = () => {
                     .then((json) => {
                         $columnBody.removeChild($note);
                         $circle.innerHTML--;
+                    })
+                    .then( () => {
                         updateLog();
                     })
             }
@@ -202,6 +213,19 @@ const navEvent = () => {
     })
 }
 
+const columnDnDEvent = () => {
+    const $columns = $All('.column',$columnList);
+    $columns.forEach($el => {
+        dndColumnHandler($el);
+    })
+}
+
+const noteDnDEvent = () => {
+    const $notes = $All('.note', $columnList);
+    $notes.forEach($el => {
+        dndNoteHandler($el);
+    })
+}
 
 
 const setEventHandler = () => {
@@ -216,6 +240,8 @@ const setEventHandler = () => {
     watchBtn();
     addNoteEvent();
     editNoteEvent();
+    columnDnDEvent();
+    noteDnDEvent();
 }
 const headerRender = () => {
     getFetch('/api/users/find')
@@ -233,6 +259,7 @@ const render = () => {
             json.data.forEach((c) => {
                 const column = new Column(c.id, c.name, c.user_id, c.list);
                 $columnList.innerHTML += column.render();
+                // dndColumnHandler(findColumn(column.id));
             })
         })
         .then(() => {

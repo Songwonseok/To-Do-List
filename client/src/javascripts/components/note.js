@@ -6,7 +6,7 @@ export class Note {
     }
 
     render() {
-        return `<div class="note" data-id=${this.id}>
+        return `<div class="note" data-id=${this.id} draggable="true" >
                     <div class="noteHeader">
                         <div class="noteTitle"><i class="far fa-edit"></i><span class="noteName">${this.content}</span></div>
                         <div class="noteRemoveBtn">&times</div>

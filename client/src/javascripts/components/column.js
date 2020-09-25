@@ -12,6 +12,7 @@ export class Column {
     render() {
         const $columnDiv = document.createElement('div');
         const $dataset = document.createAttribute('data-id');
+
         $columnDiv.className = 'column';
         $dataset.value = this.id;
         $columnDiv.setAttributeNode($dataset);

@@ -19,8 +19,6 @@ class LogModel {
 
     ADD_NOTE(info) {
         return new Promise((resolve, reject) => {
-            console.log('aaaaaaaaaaaaaa');
-            console.log(info);
             const query = "INSERT INTO Log(action, user_id, subject, to_column) VALUES('added',?,?,?)";
             const params = [info.addedBy, info.content, info.to_column];
             connection.execute(query, params, (err, rows, fields) => {

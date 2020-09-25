@@ -39,7 +39,6 @@ class NoteService {
 
     async update(noteDTO) {
         try {
-            console.log(noteDTO);
             const origin = await this.noteModel.SELECT(noteDTO.id);
             await this.noteModel.UPDATE(noteDTO);
             noteDTO.subject = `${ origin.content } -> ${ noteDTO.content }`;

@@ -1,5 +1,6 @@
-import { $, $All, getFetch, postFetch, putFetch, updateLog} from '../utils'
-import { Column } from '../components/column'
+import { $, $All, getFetch, postFetch, putFetch, updateLog, findColumn, findNote} from '../utils'
+import { Column } from '../components/column';
+import { dndColumnHandler, dndNoteHandler} from './dragNdrop';
 export class Modal {
     constructor(name, type, content=null, id=null){
         this.name = name;
@@ -66,6 +67,10 @@ export class Modal {
                         const column = new Column(data.id, data.name, data.user_id, []);
                         $columnList.innerHTML += column.render();
                         $modal.classList.toggle('hidden');
+                        return column.id
+                    })
+                    .then( id => {
+                        dndColumnHandler(findColumn(id));
                     })
                     .then(() => {
                         updateLog();
@@ -86,14 +91,9 @@ export class Modal {
         }
         putFetch('/api/columns/rename', payload)
             .then((json) => {
-                const columns = $All('.column');
-                for(let i=0;i<columns.length;i++){
-                    if (columns[i].dataset.id == this.id) {
-                        const $name = $('.columnName', columns[i]);
-                        $name.innerHTML = name;
-                        break;
-                    }
-                }
+                const $column = findColumn(this.id);
+                const $name = $('.columnName', $column);
+                $name.innerHTML = name;
                 $modal.classList.toggle('hidden');
             })
             .then(() => {
@@ -114,14 +114,9 @@ export class Modal {
         }
         putFetch('/api/note/update', payload)
             .then((json) => {
-                const notes = $All('.note');
-                for (let i = 0; i < notes.length; i++) {
-                    if (notes[i].dataset.id == this.id) {
-                        const $name = $('.noteName', notes[i]);
-                        $name.innerHTML = content;
-                        break;
-                    }
-                }
+                const $note = findNote(this.id);
+                const $name = $('.noteName', $note);
+                $name.innerHTML = content;
                 $modal.classList.toggle('hidden');
             })
             .then(() => {
