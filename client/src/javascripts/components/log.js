@@ -1,4 +1,4 @@
-const [minute, hour, day ] = [60000, 60000 * 60, 60000 * 60 * 24];
+const [second, minute, hour, day ] = [1000, 60000, 60000 * 60, 60000 * 60 * 24];
 
 export class Log {
     constructor(action, name, subject, createdAt, currentTime, to_column='', from_column=''){
@@ -24,7 +24,7 @@ export class Log {
         const createTime = new Date(this.createdAt).getTime();
         const elapsedTime = curr - createTime;
         if (elapsedTime < minute)
-            return `${Math.floor(elapsedTime/1000)} seconds ago`;
+            return (elapsedTime < 0) ? `${0} seconds ago`: `${Math.floor(elapsedTime/ second)} seconds ago`;
         else if (elapsedTime < hour)
             return `${Math.floor(elapsedTime / minute)} minutes ago`;
         else if (elapsedTime < day)
