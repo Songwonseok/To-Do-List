@@ -208,8 +208,8 @@ const setEventHandler = () => {
     dropdownEvent('addBtn');
     dropdownEvent('cancel-btn');
     watchBtn();
-    addNoteEvent();
     columnDnDEvent();
+    addNoteEvent();
     noteDnDEvent();
     editNoteEvent();
 }
