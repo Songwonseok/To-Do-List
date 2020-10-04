@@ -21,10 +21,7 @@ const onDragover = (event) => {
 }
 
 const onDragstart = (event) => {
-    alert(11);
     event.dataTransfer.setData("text/plain", event.target.dataset.id);
-    console.log(event.target.cloneNode(true));
-
 }
 
 
@@ -83,7 +80,6 @@ export const dndColumnHandler = ($column) => {
 }
 
 export const dndNoteHandler = ($note) => {
-    console.log('aa');
     $note.addEventListener('dragstart', onDragstart);
 }
 
