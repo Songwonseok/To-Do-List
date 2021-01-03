@@ -19,6 +19,16 @@ npx webpack
 npm start
 ```
 
+## 학습목표
+### BE
+- MySQL을 사용하고 드라이버는 mysql2 사용
+- passport는 사용하지 않고 express-session을 사용해서 인증을 구현
+- session은 메모리에 저장, 외부 라이브러리 X
+### FE
+- Webpack과 Babel을 활용해서 기본적인 환경 구성
+- 비동기 통신은 fetch API를 활용
+- DOM 조작과정에서 template literal 을 활용한 문자열 기반 파싱
+- SASS와 같은 pre-processor 를 사용
 
 
 ## 실행화면
